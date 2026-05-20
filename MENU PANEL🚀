@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aimhead 🪬</title>
+    <style>
+        :root {
+            --bg-color: #080c10;
+            --card-bg: #12161a;
+            --text-color: #dbdee1;
+            --accent-glow: #00ffcc;
+            --on-color: #00e676;
+            --off-color: #ff3d00;
+            --border-color: #222930;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 430px;
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+            padding: 24px;
+            border: 1px solid var(--border-color);
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #ffffff;
+            font-size: 30px;
+            margin: 0;
+            font-weight: 800;
+            text-shadow: 0 0 15px rgba(0, 255, 204, 0.3);
+            letter-spacing: 1.5px;
+        }
+
+        .header p {
+            font-size: 12px;
+            color: #72767d;
+            margin: 8px 0 0 0;
+        }
+
+        .function-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .function-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #1a2026;
+            padding: 16px;
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            transition: all 0.25s ease;
+        }
+
+        .function-item:hover {
+            border-color: #38444d;
+            background: #1e252c;
+        }
+
+        .info-zone {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .title {
+            font-weight: 700;
+            font-size: 16px;
+            color: #ffffff;
+        }
+
+        .description {
+            font-size: 11.5px;
+            color: #949ba4;
+            max-width: 250px;
+            line-height: 1.4;
+        }
+
+        /* Toggle Switch */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 56px;
+            height: 30px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--off-color);
+            transition: .3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 30px;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.3);
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+        }
+
+        input:checked + .slider {
+            background-color: var(--on-color);
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.2), 0 0 8px rgba(0, 230, 118, 0.4);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Vùng hiển thị log hệ thống */
+        .console-zone {
+            margin-top: 24px;
+            background: #090d10;
+            border-radius: 10px;
+            padding: 12px;
+            font-family: "Courier New", monospace;
+            font-size: 11px;
+            color: #00ffcc;
+            height: 65px;
+            overflow-y: auto;
+            border: 1px solid #1c232a;
+        }
+
+        /* Hệ thống Thông báo nổi (Toast Notification) */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 320px;
+        }
+
+        .toast {
+            background: rgba(18, 22, 26, 0.95);
+            color: #ffffff;
+            padding: 14px 18px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 500;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            border-left: 4px solid #fff;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            transform: translateX(50px);
+            animation: slideIn 0.3s forwards, fadeOut 0.3s 2.7s forwards;
+        }
+
+        .toast.success { border-left-color: var(--on-color); }
+        .toast.error { border-left-color: var(--off-color); }
+
+        @keyframes slideIn {
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeOut {
+            to { opacity: 0; transform: translateY(-20px); }
+        }
+
+        /* Footer bản quyền */
+        .footer-notice {
+            margin-top: 24px;
+            background: #161b22;
+            border-left: 4px solid var(--accent-glow);
+            padding: 14px;
+            border-radius: 0 12px 12px 0;
+            font-size: 12.5px;
+            line-height: 1.6;
+            color: #f0f6fc;
+            border: 1px solid
