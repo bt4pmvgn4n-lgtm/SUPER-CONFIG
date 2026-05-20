@@ -210,4 +210,156 @@
             font-size: 12.5px;
             line-height: 1.6;
             color: #f0f6fc;
-            border: 1px solid
+            border: 1px solid var(--border-color);
+            border-left: none;
+        }
+
+        .footer-notice a {
+            color: var(--accent-glow);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer-notice .warning-text {
+            display: block;
+            margin-top: 6px;
+            color: #ff6b6b;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<div class="app-container">
+    <div class="header">
+        <h1>Aimhead 🪬</h1>
+        <p>Hệ thống hỗ trợ thao tác và tối ưu hóa phần cứng an toàn</p>
+    </div>
+
+    <div class="function-list">
+        <div class="function-item">
+            <div class="info-zone">
+                <div class="title">DPI ⚙️</div>
+                <div class="description">Đồng bộ tần số quét bề mặt, giúp thao tác vuốt trong game mượt mà, không bị khựng khấc.</div>
+            </div>
+            <label class="switch">
+                <input type="checkbox" onchange="processFeature('DPI ⚙️', this.checked)">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="function-item">
+            <div class="info-zone">
+                <div class="title">Aimlock 🔫</div>
+                <div class="description">Tối ưu hóa tài nguyên đồ họa cấu hình, giữ khung hình ổn định giúp tâm ngắm không bị lệch khi giao tranh.</div>
+            </div>
+            <label class="switch">
+                <input type="checkbox" onchange="processFeature('Aimlock 🔫', this.checked)">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="function-item">
+            <div class="info-zone">
+                <div class="title">FPS ⚔️</div>
+                <div class="description">Hạn chế xung đột tiến trình chạy ngầm, giữ nhiệt độ máy mát và ổn định chu kỳ CPU.</div>
+            </div>
+            <label class="switch">
+                <input type="checkbox" onchange="processFeature('FPS ⚔️', this.checked)">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="function-item">
+            <div class="info-zone">
+                <div class="title">Tối ưu máy 🚀</div>
+                <div class="description">Giải phóng phân vùng RAM rác, tối ưu hóa bộ nhớ tạm phục vụ riêng cho các thao tác cử chỉ vuốt chạm nhanh.</div>
+            </div>
+            <label class="switch">
+                <input type="checkbox" onchange="processFeature('Tối ưu máy 🚀', this.checked)">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="function-item">
+            <div class="info-zone">
+                <div class="title">Nhạy Màn 🧲</div>
+                <div class="description">Giảm độ trễ phản hồi phần cứng (Touch Response Latency), hỗ trợ tăng tốc độ kéo tâm vuốt nhanh trong FF.</div>
+            </div>
+            <label class="switch">
+                <input type="checkbox" onchange="processFeature('Nhạy Màn 🧲', this.checked)">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </div>
+
+    <div class="console-zone" id="appConsole">
+        [Hệ thống] Trạng thái: Sẵn sàng kích hoạt tối ưu...
+    </div>
+
+    <div class="footer-notice">
+        Cần cấu hình bổ sung, DPI nâng cao liên hệ ngay:<br>
+        • TikTok: <a href="https://www.tiktok.com/@nquangtien" target="_blank">nquangtien</a><br>
+        • Facebook: <a href="#" target="_blank">Tien Quang</a>
+        <span class="warning-text">⚠️ Nói không với phần mềm thứ 3</span>
+    </div>
+</div>
+
+<script>
+    const appConsole = document.getElementById('appConsole');
+    const toastContainer = document.getElementById('toastContainer');
+
+    // Hàm xuất log chữ xanh phía dưới
+    function logMessage(text) {
+        const time = new Date().toLocaleTimeString();
+        appConsole.innerHTML = `[${time}] ${text}<br>` + appConsole.innerHTML;
+    }
+
+    // Hàm tạo thông báo nổi (Toast)
+    function showToast(message, type = 'success') {
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        toast.innerText = message;
+        
+        toastContainer.appendChild(toast);
+
+        // Tự động xóa thông báo khỏi HTML sau khi hiệu ứng ẩn kết thúc (3 giây)
+        setTimeout(() => {
+            toast.remove();
+        }, 3000);
+    }
+
+    function processFeature(featureName, isOn) {
+        // Lọc bỏ icon để hiển thị chữ trong chuỗi thông báo gọn hơn
+        const plainName = featureName.replace(/[\u2600-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDC00-\uDFFF]/g, '').trim();
+
+        if (isOn) {
+            logMessage(`Kích hoạt thành công: ${featureName}`);
+            // Hiện thông báo nổi màu xanh lá khi bật
+            showToast(`Bạn đã bật chức năng ${plainName.toLowerCase()}...`, 'success');
+            
+            // Code xử lý tối ưu phần cứng ảo
+            if (plainName === 'Tối ưu máy' || plainName === 'FPS') {
+                let dummy = []; for (let i = 0; i < 300000; i++) { dummy.push(i); } dummy = null;
+            } else if (plainName === 'Nhạy Màn' || plainName === 'DPI') {
+                document.body.style.transform = 'translateZ(0)';
+            }
+        } else {
+            logMessage(`Hủy kích hoạt: ${featureName}`);
+            // Hiện thông báo nổi màu đỏ khi tắt
+            showToast(`Bạn đã tắt chức năng ${plainName.toLowerCase()}.`, 'error');
+            
+            if (plainName === 'Nhạy Màn' || plainName === 'DPI') {
+                document.body.style.transform = 'none';
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
