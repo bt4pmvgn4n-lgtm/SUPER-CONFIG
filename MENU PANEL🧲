@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aimhead 🪬 - nquangtien</title>
+    <style>
+        :root {
+            --bg-color: #080c10;
+            --card-bg: #12161a;
+            --text-color: #dbdee1;
+            --accent-glow: #00ffcc;
+            --on-color: #00e676;
+            --off-color: #ff3d00;
+            --border-color: #222930;
+            --gradient-btn: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+
+        /* Khung chứa app chung */
+        .app-container {
+            width: 100%;
+            max-width: 430px;
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+            padding: 24px;
+            border: 1px solid var(--border-color);
+            box-sizing: border-box;
+            position: relative;
+            transition: all 0.5s ease;
+        }
+
+        /* --- GIAO DIỆN KHÓA KEY --- */
+        #loginScreen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .top-bar {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 10px 14px;
+            border-radius: 12px;
+            box-sizing: border-box;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .key-icon {
+            background: rgba(0, 242, 254, 0.1);
+            padding: 8px;
+            border-radius: 10px;
+            font-size: 18px;
+        }
+        .top-bar-info h3 {
+            margin: 0;
+            font-size: 14px;
+            color: #00ffcc;
+            letter-spacing: 0.5px;
+        }
+        .top-bar-info p {
+            margin: 2px 0 0 0;
+            font-size: 11px;
+            color: #72767d;
+        }
+
+        /* Avatar mới phát sáng */
+        .avatar-zone {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 10px 0 20px 0;
+        }
+        .avatar-circle {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #00f2fe, #7f00ff, #ff007f);
+            padding: 4px;
+            box-sizing: border-box;
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.5);
+        }
+        .avatar-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            background: #111;
+        }
+
+        /* Tên và thông tin */
+        .author-name {
+            font-size: 22px;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .sub-title {
+            font-size: 11px;
+            color: #72767d;
+            letter-spacing: 2px;
+            margin: 5px 0 25px 0;
+            text-transform: uppercase;
+        }
+        .app-title-main {
+            font-size: 20px;
+            font-weight: 700;
+            color: #00ffcc;
+            text-align: center;
+            margin: 0 0 8px 0;
+        }
+        .status-text {
+            font-size: 12.5px;
+            color: #949ba4;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        /* Ô nhập Key */
+        .input-group {
+            width: 100%;
+            position: relative;
+            margin-bottom: 8px;
+        }
+        .input-label {
+            font-size: 11px;
+            color: #4f5660;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+            display: block;
+        }
+        .input-group input {
+            width: 100%;
+            background: #090d10;
+            border: 1px solid var(--border-color);
+            padding: 14px 40px 14px 16px;
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 14px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .input-group input:focus {
+            border-color: #4facfe;
+        }
+        .eye-icon {
+            position: absolute;
+            right: 15px;
+            top: 38px;
+            cursor: pointer;
+            opacity: 0.6;
+        }
+
+        .waiting-text {
+            font-size: 12px;
+            color: #e67e22;
+            margin: 5px 0 25px 0;
+            min-height: 18px;
+        }
+
+        /* Nút xác nhận kiểu Gradient */
+        .btn-unlock {
+            width: 100%;
+            background: var(--gradient-btn);
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
+            transition: transform 0.2s, opacity 0.2s;
+        }
+        .btn-unlock:active {
+            transform: scale(0.98);
+        }
+
+        /* --- GIAO DIỆN CHÍNH (ẨN ĐI LÚC ĐẦU) --- */
+        #mainMenu {
+            display: none;
+        }
+
+        .header { text-align: center; margin-bottom: 30px; }
+        .header h1 { color: #ffffff; font-size: 30px; margin: 0; font-weight: 800; text-shadow: 0 0 15px rgba(0, 255, 204, 0.3); letter-spacing: 1.5px; }
+        .header p { font-size: 12px; color: #72767d; margin: 8px 0 0 0; }
+        .function-list { display: flex; flex-direction: column; gap: 16px; }
+        .function-item { display: flex; justify-content: space-between; align-items: center; background: #1a2026; padding: 16px; border-radius: 14px; border: 1px solid var(--border-color); transition: all 0.25s ease; }
+        .function-item:hover { border-color: #38444d; background: #1e252c; }
+        .info-zone { display: flex; flex-direction: column; gap: 4px; }
+        .title { font-weight: 700; font-size: 16px; color: #ffffff; }
+        .description { font-size: 11.5px; color: #949ba4; max-width: 250px; line-height: 1.4; }
+        .switch { position: relative; display: inline-block; width: 56px; height: 30px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--off-color); transition: .3s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 30px; box-shadow: inset 0 2px 6px rgba(0,0,0,0.3); }
+        .slider:before { position: absolute; content: ""; height: 22px; width: 22px; left: 4px; bottom: 4px; background-color: white; transition: .3s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.4); }
+        input:checked + .slider { background-color: var(--on-color); box-shadow: inset 0 2px 6px rgba(0,0,0,0.2), 0 0 8px rgba(0, 230, 118, 0.4); }
+        input:checked + .slider:before { transform: translateX(26px); }
+        .console-zone { margin-top: 24px; background: #090d10; border-radius: 10px; padding: 12px; font-family: "Courier New", monospace; font-size: 11px; color: #00ffcc; height: 65px; overflow-y: auto; border: 1px solid #1c232a; }
+        .footer-notice { margin-top: 24px; background: #161b22; border-left: 4px solid var(--accent-glow); padding: 14px; border-radius: 0 12px 12px 0; font-size: 12.5px; line-height: 1.6; color: #f0f6fc; border: 1px solid var(--border-color); border-left: none; }
+        .footer-notice a { color: var(--accent-glow); text-decoration: none; font-weight: bold; }
+        .footer-notice .warning-text { display: block; margin-top: 6px; color: #ff6b6b; font-weight: bold; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+
+        /* Toast Thông báo nổi */
+        .toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; max-width: 320px; }
+        .toast { background: rgba(18, 22, 26, 0.95); color: #ffffff; padding: 14px 18px; border-radius: 10px; font-size: 13px; font-weight: 500; box-shadow: 0 5px 15px rgba(0,0,0,0.5); border-left: 4px solid #fff; display: flex; align-items: center; opacity: 0; transform: translateX(50px); animation: slideIn 0.3s forwards; }
+        .toast.success { border-left-color: var(--on-color); }
+        .toast.error { border-left-color: var(--off-color); }
+        .toast.info { border-left-color: #3498db; }
+        @keyframes slideIn { to { opacity: 1; transform: translateX(0); } }
+        .fadeOutAnimation { animation: fadeOut 0.3s forwards !important; }
+        @keyframes fadeOut { to { opacity: 0; transform: translateY(-20px); } }
+    </style>
+</head>
+<body>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<div class="app-container">
+    
+    <div id="loginScreen">
+        <div class="top-bar">
+            <div class="key-icon">🔑</div>
+            <div class="top-bar-info">
+                <h3>NHẬP KEY APP 📱</h3>
+                <p>Độ Nhạy Chuẩn iOS · Android</p>
+            </div>
+        </div>
+
+        <div class="avatar-zone">
+            <div class="avatar-circle">
+                <img src="avatar.jpg" alt="Avatar">
+            </div>
+        </div>
+
+        <h2 class="author-name">nquangtien 🧩</h2>
+        <div class="sub-title">MENU PANEL FF · OB53</div>
+
+        <h1 class="app-title-main">App hỗ trợ kéo tâm nquangtien</h1>
+        <p class="status-text">Nhập Key Để Mở Khoá App Premium ✅</p>
+
+        <div class="input-group">
+            <span class="input-label">Key truy cập</span>
+            <input type="text" id="keyInput" placeholder="Nhập KEY của bạn...">
+            <span class="eye-icon">👁️</span>
+        </div>
+
+        <div class="waiting-text" id="waitingNotice">Đang chờ key hợp lệ...</div>
+
+        <button class="btn-unlock" onclick="verifyKey()">Unlock Sensitivity ⚙️</button>
+    </div>
+
+    <div id="mainMenu">
+        <div class="header">
+            <h1>Aimhead 🪬</h1>
+            <p>Hệ thống hỗ trợ thao tác và tối ưu hóa phần cứng an toàn</p>
+        </div>
+
+        <div class="function-list">
+            <div class="function-item">
+                <div class="info-zone">
+                    <div class="title">DPI ⚙️</div>
+                    <div class="description">Đồng bộ tần số quét bề mặt, giúp thao tác vuốt trong game mượt mà, không bị khựng khấc.</div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" onchange="processFeature('DPI ⚙️', this.checked)">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="function-item">
+                <div class="info-zone">
+                    <div class="title">Aimlock 🔫</div>
+                    <div class="description">Tối ưu hóa tài nguyên đồ họa cấu hình, giữ khung hình ổn định giúp tâm ngắm không bị lệch khi giao tranh.</div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" onchange="processFeature('Aimlock 🔫', this.checked)">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="function-item">
+                <div class="info-zone">
+                    <div class="title">FPS ⚔️</div>
+                    <div class="description">Hạn chế xung đột tiến trình chạy ngầm, giữ nhiệt độ máy mát và ổn định chu kỳ CPU.</div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" onchange="processFeature('FPS ⚔️', this.checked)">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="function-item">
+                <div class="info-zone">
+                    <div class="title">Tối ưu máy 🚀</div>
+                    <div class="description">Giải phóng phân vùng RAM rác, tối ưu hóa bộ nhớ tạm phục vụ riêng cho các thao tác cử chỉ vuốt chạm nhanh.</div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" onchange="processFeature('Tối ưu máy 🚀', this.checked)">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="function-item">
+                <div class="info-zone">
+                    <div class="title">Nhạy Màn 🧲</div>
+                    <div class="description">Giảm độ trễ phản hồi phần cứng (Touch Response Latency), hỗ trợ tăng tốc độ kéo tâm vuốt nhanh trong FF.</div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" onchange="processFeature('Nhạy Màn 🧲', this.checked)">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="console-zone" id="appConsole">
+            [Hệ thống] Trạng thái: Sẵn sàng kích hoạt tối ưu...
+        </div>
+
+        <div class="footer-notice">
+            Cần cấu hình bổ sung, DPI nâng cao liên hệ ngay:<br>
+            • TikTok: <a href="https://www.tiktok.com/@nquangtien" target="_blank">nquangtien</a><br>
+            • Facebook: <a href="#" target="_blank">Tien Quang</a>
+            <span class="warning-text">⚠️ Nói không với phần mềm thứ 3</span>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    const appConsole = document.getElementById('appConsole');
+    const toastContainer = document.getElementById('toastContainer');
+    const waitingNotice = document.getElementById('waitingNotice');
+
+    function showToast(message, type = 'success') {
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        toast.innerText = message;
+        
+        toastContainer.appendChild(toast);
+
+        setTimeout(() => {
+            toast.classList.add('fadeOutAnimation');
+            setTimeout(() => { toast.remove(); }, 300);
+        }, 2700);
+    }
+
+    function verifyKey() {
+        const inputKey = document.getElementById('keyInput').value.trim();
+        const correctKey = "CMZ-HV4X";
+
+        if (inputKey === correctKey) {
+            showToast("Key chính xác! Đang tiến hành mở khóa...", "info");
+            
+            let secondsLeft = 3;
+            waitingNotice.style.color = "#00e676";
+            waitingNotice.innerText = `Xác thực thành công! Đợi ${secondsLeft} giây để vào...`;
+
+            const countdown = setInterval(() => {
+                secondsLeft--;
+                if (secondsLeft > 0) {
+                    waitingNotice.innerText = `Xác thực thành công! Đợi ${secondsLeft} giây để vào...`;
+                } else {
+                    clearInterval(countdown);
+                    document.getElementById('loginScreen').style.display = 'none';
+                    document.getElementById('mainMenu').style.display = 'block';
+                    showToast("Đã vào Menu Panel thành công!", "success");
+                    logMessage("Hệ thống đăng nhập thành công. Chào mừng nquangtien!");
+                }
+            }, 1000);
+
+        } else {
+            showToast("Mật mã không đúng. Vui lòng kiểm tra lại!", "error");
+            waitingNotice.style.color = "#ff3d00";
+            waitingNotice.innerText = "Sai mật mã! Truy cập bị từ chối.";
+        }
+    }
+
+    function logMessage(text) {
+        const time = new Date().toLocaleTimeString();
+        appConsole.innerHTML = `[${time}] ${text}<br>` + appConsole.innerHTML;
+    }
+
+    function processFeature(featureName, isOn) {
+        const plainName = featureName.replace(/[\u2600-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDC00-\uDFFF]/g, '').trim();
+        if (isOn) {
+            logMessage(`Kích hoạt thành công: ${featureName}`);
+            showToast(`Bạn đã bật chức năng ${plainName.toLowerCase()}...`, 'success');
+            if (plainName === 'Tối ưu máy' || plainName === 'FPS') {
+                let dummy = [];
+                for (let i = 0; i < 300000; i++) { dummy.push(i); } dummy = null;
+            } else if (plainName === 'Nhạy Màn' || plainName === 'DPI') {
+                document.body.style.transform = 'translateZ(0)';
+            }
+        } else {
+            logMessage(`Hủy kích hoạt: ${featureName}`);
+            showToast(`Bạn đã tắt chức năng ${plainName.toLowerCase()}.`, 'error');
+            if (plainName === 'Nhạy Màn' || plainName === 'DPI') {
+                document.body.style.transform = 'none';
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
