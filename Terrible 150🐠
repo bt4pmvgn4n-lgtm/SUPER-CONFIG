@@ -2,15 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <!-- ==================================================================== -->
-    <!-- TỔNG QUAN CẤU HÌNH GỐC (HỢP LỆ 100%)                                 -->
-    <!-- ==================================================================== -->
+    <!-- ========================================== -->
+    <!-- CẤU HÌNH GỐC (ROOT CONFIGURATION)          -->
+    <!-- ========================================== -->
     <key>PayloadDownloadable</key>
     <true/>
+    <key>PayloadIdentifier</key>
+    <string>com.nquangtien.terribledpi150.root</string>
     <key>UUID</key>
     <string>A1B2C3D4-E5F6-7A8B-9C0D-E1F2A3B4C5D6</string>
-    <key>PayloadIdentifier</key>
-    <string>com.nquangtien.terribledpi150.viphack</string>
     <key>PayloadType</key>
     <string>Configuration</string>
     <key>PayloadVersion</key>
@@ -34,20 +34,21 @@ By: nquangtien</string>
     <key>PayloadOrganization</key>
     <string>nquangtien Premium Edition</string>
 
+    <!-- ========================================== -->
+    <!-- DANH SÁCH PHÂN HỆ ĐÃ ĐƯỢC CHUẨN HÓA LÕI      -->
+    <!-- ========================================== -->
     <key>PayloadContent</key>
     <array>
-        <!-- ==================================================================== -->
-        <!-- 1. PHÂN HỆ DNS: NHẠY TÂM, FIX RUNG, BÁM ĐẦU                          -->
-        <!-- ==================================================================== -->
+        <!-- 1. PHÂN HỆ DNS PREMIUM (BẮT BUỘC ĐỦ 4 KHÓA NỀN TẢNG) -->
         <dict>
+            <key>PayloadIdentifier</key>
+            <string>com.nquangtien.terribledpi150.sub.dns</string>
+            <key>PayloadUUID</key>
+            <string>B2C3D4E5-F6A7-8B9C-0D1E-2F3A4B5C6D7E</string>
             <key>PayloadType</key>
             <string>com.apple.dnsSettings.managed</string>
             <key>PayloadVersion</key>
             <integer>1</integer>
-            <key>PayloadIdentifier</key>
-            <string>com.nquangtien.terribledpi150.dns.ultra</string>
-            <key>PayloadUUID</key>
-            <string>B2C3D4E5-F6A7-8B9C-0D1E-2F3A4B5C6D7E</string>
             <key>PayloadDisplayName</key>
             <string>🚀 DNS Gaming HyperFast: Bám Đầu &amp; Fix Rung</string>
             <key>DNSSettings</key>
@@ -74,72 +75,16 @@ By: nquangtien</string>
             </dict>
         </dict>
 
-        <!-- ==================================================================== -->
-        <!-- 2. PHÂN HỆ WI-FI: TỐI ƯU TẢI DỮ LIỆU & GIẢM TRỄ PACKET               -->
-        <!-- ==================================================================== -->
+        <!-- 2. PHÂN HỆ TRỢ NĂNG VUỐT MÀN HÌNH & TẦN SỐ QUÉT -->
         <dict>
-            <key>PayloadType</key>
-            <string>com.apple.wifi.managed</string>
-            <key>PayloadVersion</key>
-            <integer>1</integer>
             <key>PayloadIdentifier</key>
-            <string>com.nquangtien.terribledpi150.wifi.max</string>
+            <string>com.nquangtien.terribledpi150.sub.accessibility</string>
             <key>PayloadUUID</key>
-            <string>C3D4E5F6-A7B8-9C0D-E1F2-3A4B5C6D7E8F</string>
-            <key>PayloadDisplayName</key>
-            <string>📶 Băng Thông Max Speed (Tải Dữ Liệu &amp; Giảm Ping)</string>
-            <key>AutoJoin</key>
-            <true/>
-            <key>CaptiveBypass</key>
-            <true/>
-            <key>ProxyType</key>
-            <string>None</string>
-            <key>QoSMarkingPolicy</key>
-            <dict>
-                <key>QoSMarkingEnabled</key>
-                <true/>
-                <key>AppleAudioVideoAllowances</key>
-                <true/>
-            </dict>
-        </dict>
-
-        <!-- ==================================================================== -->
-        <!-- 3. PHÂN HỆ VPN GIẢ LẬP: ĐƯỜNG TRUYỀN SIÊU TỐC FASTPATH               -->
-        <!-- ==================================================================== -->
-        <dict>
-            <key>PayloadType</key>
-            <string>com.apple.vpn.managed</string>
-            <key>PayloadVersion</key>
-            <integer>1</integer>
-            <key>PayloadIdentifier</key>
-            <string>com.nquangtien.terribledpi150.vpn.fast</string>
-            <key>PayloadUUID</key>
-            <string>D4E5F6A7-B8C9-0D1E-2F3A-4B5C6D7E8F9A</string>
-            <key>PayloadDisplayName</key>
-            <string>🛡️ VPN FastPath Bypass Lag (120Hz-145Hz Fast Response)</string>
-            <key>UserTunnelCodablePath</key>
-            <string>FastPath-UltraGameMode</string>
-            <key>Proxies</key>
-            <dict>
-                <key>HTTPEnable</key>
-                <integer>0</integer>
-                <key>HTTPSEnable</key>
-                <integer>0</integer>
-            </dict>
-        </dict>
-
-        <!-- ==================================================================== -->
-        <!-- 4. PHÂN HỆ TRỢ NĂNG: ĐỘ NHẠY MÀN HÌNH & ÉP FRAME RATE MAX HZ        -->
-        <!-- ==================================================================== -->
-        <dict>
+            <string>E5F6A7B8-C9D0-1E2F-3A4B-5C6D7E8F9A0B</string>
             <key>PayloadType</key>
             <string>com.apple.accessibility</string>
             <key>PayloadVersion</key>
             <integer>1</integer>
-            <key>PayloadIdentifier</key>
-            <string>com.nquangtien.terribledpi150.accessibility.pro</string>
-            <key>PayloadUUID</key>
-            <string>E5F6A7B8-C9D0-1E2F-3A4B-5C6D7E8F9A0B</string>
             <key>PayloadDisplayName</key>
             <string>🕹️ Siêu Cảm Ứng DPI 150 &amp; Hz Mượt</string>
             <key>TouchAccommodationEnabled</key>
@@ -160,30 +105,31 @@ By: nquangtien</string>
             <real>1.50</real>
         </dict>
 
-        <!-- ==================================================================== -->
-        <!-- 5. PHÂN HỆ ENGINE ĐỒ HỌA: ĐÃ SỬA LỖI ĐỂ KHÔNG BỊ TỪ CHỐI KHI CÀI ĐẶT -->
-        <!-- ==================================================================== -->
+        <!-- 3. PHÂN HỆ MẠNG WI-FI HIỆU NĂNG CAO -->
         <dict>
+            <key>PayloadIdentifier</key>
+            <string>com.nquangtien.terribledpi150.sub.wifi</string>
+            <key>PayloadUUID</key>
+            <string>C3D4E5F6-A7B8-9C0D-E1F2-3A4B5C6D7E8F</string>
             <key>PayloadType</key>
-            <string>com.apple.webclip.managed</string>
+            <string>com.apple.wifi.managed</string>
             <key>PayloadVersion</key>
             <integer>1</integer>
-            <key>PayloadIdentifier</key>
-            <string>com.nquangtien.terribledpi150.webclip.engine</string>
-            <key>PayloadUUID</key>
-            <string>F6A7B8C9-D0E1-2F3A-4B5C-6D7E8F9A0B1C</string>
             <key>PayloadDisplayName</key>
-            <string>🔥 Core Engine Fix Rung &amp; Bám Đầu</string>
-            <key>Label</key>
-            <string>Free Fire Smooth Engine</string>
-            <key>URL</key>
-            <string>https://ff.garena.vn/?dpi=150&amp;fps=145&amp;touch=max&amp;smooth=1</string>
-            <key>IsRemovable</key>
+            <string>📶 Băng Thông Max Speed (Tải Dữ Liệu &amp; Giảm Ping)</string>
+            <key>AutoJoin</key>
             <true/>
-            <key>FullScreen</key>
+            <key>CaptiveBypass</key>
             <true/>
-            <key>Precomposed</key>
-            <true/>
+            <key>ProxyType</key>
+            <string>None</string>
+            <key>QoSMarkingPolicy</key>
+            <dict>
+                <key>QoSMarkingEnabled</key>
+                <true/>
+                <key>AppleAudioVideoAllowances</key>
+                <true/>
+            </dict>
         </dict>
     </array>
 </dict>
