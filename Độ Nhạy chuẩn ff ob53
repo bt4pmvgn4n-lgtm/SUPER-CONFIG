@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Tìm Độ Nhạy Tối Ưu Headshot</title>
+    <style>
+        :root {
+            --primary-color: #ff4500;
+            --secondary-color: #1e272e;
+            --accent-color: #00d2d3;
+            --text-color: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle, #2f3542, #1e272e);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 24px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 69, 0, 0.5);
+        }
+
+        p.subtitle {
+            font-size: 13px;
+            color: #a4b0be;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        select, input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            background: #2f3542;
+            border: 1px solid #57606f;
+            color: #fff;
+            font-size: 15px;
+            outline: none;
+            transition: 0.3s;
+            box-sizing: border-box;
+        }
+
+        select:focus, input[type="text"]:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 8px rgba(255, 69, 0, 0.4);
+        }
+
+        /* Thêm viền đỏ nổi bật cho ô mật khẩu */
+        .password-input {
+            border: 1px solid #ff4757 !important;
+        }
+
+        .btn-get {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(45deg, #ff4757, #ff6b81);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
+            display: block;
+            box-sizing: border-box;
+        }
+
+        .btn-get:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 71, 87, 0.6);
+        }
+
+        /* Phần kết quả */
+        .result-box {
+            margin-top: 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            display: none;
+            border-left: 4px solid var(--primary-color);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffa502;
+            margin-bottom: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 5px;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 14px;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+        }
+
+        .stat-row:last-child {
+            border-bottom: none;
+        }
+
+        .stat-name {
+            color: #ced6e0;
+        }
+
+        .stat-val {
+            font-weight: bold;
+            color: #2ed573;
+        }
+
+        .loading {
+            display: none;
+            margin: 20px 0;
+            font-size: 14px;
+            color: #eccc68;
+        }
+
+        .loading::after {
+            content: ' .';
+            animation: dots 1s steps(5, end) infinite;
+        }
+
+        @keyframes dots {
+            0%, 20% { color: rgba(0,0,0,0); text-shadow: .25em 0 0 rgba(0,0,0,0), .5em 0 0 rgba(0,0,0,0); }
+            40% { color: #eccc68; text-shadow: .25em 0 0 rgba(0,0,0,0), .5em 0 0 rgba(0,0,0,0); }
+            60% { text-shadow: .25em 0 0 #eccc68, .5em 0 0 rgba(0,0,0,0); }
+            80%, 100% { text-shadow: .25em 0 0 #eccc68, .5em 0 0 #eccc68; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>HACK ĐỘ NHẠY VIP</h1>
+    <p class="subtitle">Hệ thống tự động tính toán độ nhạy kéo tâm Headshot 100%</p>
+
+    <!-- Ô NHẬP MẬT KHẨU -->
+    <div class="form-group">
+        <label for="app-password" style="color: #ff4757;">Nhập Mật Khẩu Kích Hoạt App:</label>
+        <input type="text" id="app-password" class="password-input" placeholder="Nhập mật khẩu để mở khóa...">
+    </div>
+
+    <div class="form-group">
+        <label for="device-brand">Chọn Hãng Điện Thoại:</label>
+        <select id="device-brand" onchange="updateModels()">
+            <option value="">-- Chọn hãng --</option>
+            <option value="iphone">iPhone (iOS)</option>
+            <option value="samsung">Samsung</option>
+            <option value="oppo">Oppo</option>
+            <option value="xiaomi">Xiaomi / Redmi</option>
+            <option value="vivo">Vivo</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="device-model">Chọn Dòng Máy Cụ Thể:</label>
+        <select id="device-model" disabled>
+            <option value="">-- Vui lòng chọn hãng trước --</option>
+        </select>
+    </div>
+
+    <button class="btn-get" onclick="generateSensitivity()">Nhận Cấu Hình Độ Nhạy</button>
+
+    <div class="loading" id="loading-text">Đang xác thực mật khẩu và phân tích cấu hình...</div>
+
+    <div class="result-box" id="result-box">
+        <div class="result-title" id="result-phone-name">KẾT QUẢ ĐỘ NHẠY</div>
+        <div class="stat-row"><span class="stat-name">Nhìn Xung Quanh (General):</span><span class="stat-val" id="val-general">0</span></div>
+        <div class="stat-row"><span class="stat-name">Red Dot Sight:</span><span class="stat-val" id="val-reddot">0</span></div>
+        <div class="stat-row"><span class="stat-name">Ống Ngắm 2x (2x Scope):</span><span class="stat-val" id="val-2x">0</span></div>
+        <div class="stat-row"><span class="stat-name">Ống Ngắm 4x (4x Scope):</span><span class="stat-val" id="val-4x">0</span></div>
+        <div class="stat-row"><span class="stat-name">Ống Ngắm Sniper:</span><span class="stat-val" id="val-sniper">0</span></div>
+        <div class="stat-row"><span class="stat-name">Nhìn Tự Do (Free Look):</span><span class="stat-val" id="val-free">0</span></div>
+        <div class="stat-row" style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 5px; padding-top: 10px;">
+            <span class="stat-name" style="color: #ff4757; font-weight: bold;">Cài đặt DPI Khuyên Dùng:</span>
+            <span class="stat-val" id="val-dpi" style="color: #ff4757;">Mặc định</span>
+        </div>
+        <div class="stat-row"><span class="stat-name">Kích Thước Nút Bắn:</span><span class="stat-val" id="val-button" style="color: #00d2d3;">45%</span></div>
+    </div>
+</div>
+
+<script>
+    const deviceData = {
+        iphone: ["iPhone 7/8 Plus", "iPhone X / XR", "iPhone 11 / 11 Pro Max", "iPhone 12 / 13 Pro Max", "iPhone 14 / 15 Pro Max"],
+        samsung: ["Samsung Galaxy A54 / A73", "Samsung Galaxy S20 / S21 Ultra", "Samsung Galaxy S22 / S23 Ultra", "Samsung Note 20 Ultra"],
+        oppo: ["Oppo Reno 7 / 8 / 10", "Oppo A57 / A77s", "Oppo Find X5 Pro"],
+        xiaomi: ["Redmi Note 11 / 12 Pro", "Poco X3 / X5 Pro", "Xiaomi 12 / 13T Pro"],
+        vivo: ["Vivo Y22s / Y35", "Vivo V25 / V27 Pro", "Vivo X90 Pro"]
+    };
+
+    function updateModels() {
+        const brandSelect = document.getElementById("device-brand");
+        const modelSelect = document.getElementById("device-model");
+        const selectedBrand = brandSelect.value;
+
+        modelSelect.innerHTML = "";
+
+        if (selectedBrand === "") {
+            modelSelect.innerHTML = '<option value="">-- Vui lòng chọn hãng trước --</option>';
+            modelSelect.disabled = true;
+            return;
+        }
+
+        modelSelect.disabled = false;
+        
+        let defaultOpt = document.createElement("option");
+        defaultOpt.value = "";
+        defaultOpt.text = "-- Chọn dòng máy --";
+        modelSelect.appendChild(defaultOpt);
+
+        deviceData[selectedBrand].forEach(function(model) {
+            let opt = document.createElement("option");
+            opt.value = model;
+            opt.text = model;
+            modelSelect.appendChild(opt);
+        });
+    }
+
+    function generateSensitivity() {
+        const passwordInput = document.getElementById("app-password").value.trim();
+        const brand = document.getElementById("device-brand").value;
+        const model = document.getElementById("device-model").value;
+        const loadingText = document.getElementById("loading-text");
+        const resultBox = document.getElementById("result-box");
+
+        // KIỂM TRA MẬT KHẨU (NQT-281)
+        if (passwordInput !== "NQT-281") {
+            alert("Mật khẩu không chính xác! Vui lòng kiểm tra lại.");
+            return;
+        }
+
+        if (!brand || !model) {
+            alert("Vui lòng chọn đầy đủ Hãng và Dòng máy điện thoại của bạn!");
+            return;
+        }
+
+        resultBox.style.display = "none";
+        loadingText.style.display = "block";
+
+        setTimeout(() => {
+            loadingText.style.display = "none";
+
+            let general = Math.floor(Math.random() * (100 - 92 + 1)) + 92;
+            let reddot = Math.floor(Math.random() * (100 - 88 + 1)) + 88;
+            let scope2x = Math.floor(Math.random() * (98 - 85 + 1)) + 85;
+            let scope4x = Math.floor(Math.random() * (99 - 85 + 1)) + 85;
+            let sniper = Math.floor(Math.random() * (70 - 45 + 1)) + 45;
+            let freelook = Math.floor(Math.random() * (90 - 50 + 1)) + 50;
+            
+            let dpi = "Mặc định";
+            if (brand !== "iphone") {
+                dpi = Math.floor(Math.random() * (600 - 450 + 1)) + 450 + " DPI";
+            } else {
+                dpi = "Bật Cận thị / Tốc độ con trỏ: 120";
+            }
+
+            let buttonSize = Math.floor(Math.random() * (52 - 42 + 1)) + 42 + "%";
+
+            document.getElementById("result-phone-name").innerText = "ĐỘ NHẠY TỐI ƯU CHO: " + model.toUpperCase();
+            document.getElementById("val-general").innerText = general;
+            document.getElementById("val-reddot").innerText = reddot;
+            document.getElementById("val-2x").innerText = scope2x;
+            document.getElementById("val-4x").innerText = scope4x;
+            document.getElementById("val-sniper").innerText = sniper;
+            document.getElementById("val-free").innerText = freelook;
+            document.getElementById("val-dpi").innerText = dpi;
+            document.getElementById("val-button").innerText = buttonSize;
+
+            resultBox.style.display = "block";
+
+        }, 1500); 
+    }
+</script>
+
+</body>
+</html>
